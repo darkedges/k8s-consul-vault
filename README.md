@@ -95,6 +95,12 @@ kubectl exec -ti vault-2 -- vault operator unseal xixC7b7/zNW7ZLY6igHUb0vQ84O9CT
 kubectl exec -ti vault-2 -- vault operator unseal n/tTp2uPfdhz9kSOpPWW8O/kybjRBqLf73K9ACHfR+tg
 ```
 
+## Cet Manager
+
+```bash
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.16.1 --set installCRDs=true
+```
+
 ### Error 1
 
 $ kubectl logs counting -c consul-connect-inject-init
