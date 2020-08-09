@@ -1,0 +1,16 @@
+global:
+  name: consul
+connectInject:
+  enabled: true
+client:
+  enabled: true
+ingressGateways:
+  enabled: true
+  defaults:
+    affinity: null
+  service: LoadBalancer
+server:
+  affinity: null
+ui:
+  service:
+    type: LoadBalancer

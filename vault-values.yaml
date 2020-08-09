@@ -1,0 +1,8 @@
+server:
+  affinity: null
+  ha:
+    enabled: true
+ui:
+  enabled: true
+  serviceType: LoadBalancer
+  externalPort: 80
