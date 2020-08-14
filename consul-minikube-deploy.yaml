@@ -1,4 +1,11 @@
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hashicorp
+  labels:
+    app: hashicorp
+---
 # Source: consul/templates/server-disruptionbudget.yaml
 # PodDisruptionBudget to prevent degrading the server cluster through
 # voluntary cluster changes.
@@ -6,7 +13,7 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: consul-consul-server
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -25,7 +32,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: consul-consul-client
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -37,7 +44,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: consul-consul-connect-injector-webhook-svc-account
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -49,7 +56,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: consul-consul-ingress-gateway
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -63,7 +70,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: consul-consul-server
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -77,7 +84,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: consul-consul-client-config
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -98,7 +105,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: consul-consul-server-config
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -150,14 +157,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: consul-consul-connect-injector-webhook-svc-account
-    namespace: default
+    namespace: hashicorp
 ---
 # Source: consul/templates/client-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: consul-consul-client
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -170,7 +177,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: consul-consul-ingress-gateway
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -192,7 +199,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: consul-consul-server
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -205,7 +212,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: consul-consul-client
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -224,7 +231,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: consul-consul-ingress-gateway
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -245,7 +252,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: consul-consul-server
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -265,7 +272,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: consul-consul-connect-injector-svc
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -286,7 +293,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: consul-consul-dns
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -313,7 +320,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: consul-consul-ingress-gateway
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -344,7 +351,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: consul-consul-server
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -403,7 +410,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: consul-consul-ui
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -427,7 +434,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: consul-consul
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -554,7 +561,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: consul-consul-connect-injector-webhook-deployment
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -643,7 +650,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: consul-consul-ingress-gateway
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -893,7 +900,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: consul-consul-server
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -1037,7 +1044,7 @@ apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
   name: consul-consul-connect-injector-cfg
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
@@ -1048,7 +1055,7 @@ webhooks:
     clientConfig:
       service:
         name: consul-consul-connect-injector-svc
-        namespace: default
+        namespace: hashicorp
         path: "/mutate"
       caBundle: ""
     rules:
@@ -1062,7 +1069,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: "consul-consul-test"
-  namespace: default
+  namespace: hashicorp
   labels:
     app: consul
     chart: consul-helm
