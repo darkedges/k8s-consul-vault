@@ -21,3 +21,10 @@ server:
   disruptionBudget:
     enabled: true
     maxUnavailable: 0
+
+# Enbale ingress
+ingressGateways:
+  enabled: true
+  defaults:
+    affinity: null
+  service: LoadBalancer
