@@ -95,7 +95,44 @@ kubectl exec -ti vault-2 -- vault operator unseal xixC7b7/zNW7ZLY6igHUb0vQ84O9CT
 kubectl exec -ti vault-2 -- vault operator unseal n/tTp2uPfdhz9kSOpPWW8O/kybjRBqLf73K9ACHfR+tg
 ```
 
-## Cet Manager
+### Vault - Raft
+
+```bash
+kubectl exec -ti vault-0 -- vault operator init
+kubectl exec -ti vault-0 -- vault operator unseal sWGrn0c0D3Z2mKNY/3ck6jpZbEDhYpHu8xZ1uVZv9ZRR
+kubectl exec -ti vault-0 -- vault operator unseal P4OBL+cRhFPIGRjTplv708D7zcmqvDa9W5RFcWjDVmI3
+kubectl exec -ti vault-0 -- vault operator unseal KE0AwmwcYoRxlpXQY7fgAiXubjkbGXPeA7TjZx9RAAEB
+kubectl exec -ti vault-1 -- vault operator raft join http://vault-0.vault-internal:8200
+kubectl exec -ti vault-1 -- vault operator unseal sWGrn0c0D3Z2mKNY/3ck6jpZbEDhYpHu8xZ1uVZv9ZRR
+kubectl exec -ti vault-1 -- vault operator unseal P4OBL+cRhFPIGRjTplv708D7zcmqvDa9W5RFcWjDVmI3
+kubectl exec -ti vault-1 -- vault operator unseal KE0AwmwcYoRxlpXQY7fgAiXubjkbGXPeA7TjZx9RAAEB
+kubectl exec -ti vault-2 -- vault operator raft join http://vault-0.vault-internal:8200
+kubectl exec -ti vault-2 -- vault operator unseal sWGrn0c0D3Z2mKNY/3ck6jpZbEDhYpHu8xZ1uVZv9ZRR
+kubectl exec -ti vault-2 -- vault operator unseal P4OBL+cRhFPIGRjTplv708D7zcmqvDa9W5RFcWjDVmI3
+kubectl exec -ti vault-2 -- vault operator unseal KE0AwmwcYoRxlpXQY7fgAiXubjkbGXPeA7TjZx9RAAEB
+kubectl exec -ti vault-0 -- vault login s.JCrg63dS2MK4NauRLTX8E2Vm
+kubectl exec -ti vault-0 -- vault operator raft list-peers
+```
+
+returns
+
+```bash
+Unseal Key 1: sWGrn0c0D3Z2mKNY/3ck6jpZbEDhYpHu8xZ1uVZv9ZRR
+Unseal Key 2: P4OBL+cRhFPIGRjTplv708D7zcmqvDa9W5RFcWjDVmI3
+Unseal Key 3: KE0AwmwcYoRxlpXQY7fgAiXubjkbGXPeA7TjZx9RAAEB
+Unseal Key 4: KMBMRXTdcrMpXHc7wEgm0u/xLa5C7cejde1ky08NrIya
+Unseal Key 5: Ulyxr7PnOPwo3RJFqNu6uUcxzWCP989KEmcHQVNI9hwm
+
+Initial Root Token: s.JCrg63dS2MK4NauRLTX8E2Vm
+
+Node                                    Address                        State       Voter
+----                                    -------                        -----       -----
+49bf94bd-3c61-559d-5a63-7e399d0061c6    vault-0.vault-internal:8201    leader      true
+140ad967-3548-49e0-ff56-9163d91243bf    vault-1.vault-internal:8201    follower    true
+ec5c7862-554f-d19c-449f-0bab1c0cf7c5    vault-2.vault-internal:8201    follower    true
+```
+
+## Cert Manager
 
 ```bash
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.16.1 --set installCRDs=true
